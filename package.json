@@ -1,0 +1,16 @@
+{
+  "name": "logger-ts",
+  "description": "A logger for use with fp-ts.",
+  "version": "0.1.0",
+  "license": "MIT",
+  "homepage": "https://github.com/thewilkybarkid/clock-ts",
+  "repository": "github:thewilkybarkid/logger-ts",
+  "devDependencies": {
+    "@commitlint/cli": "^16.2.3",
+    "@commitlint/config-conventional": "^16.2.1",
+    "husky": "^7.0.4"
+  },
+  "scripts": {
+    "prepare": "which husky && husky install || true"
+  }
+}
