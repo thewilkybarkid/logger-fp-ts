@@ -1,4 +1,7 @@
-# logger-ts
+---
+title: Home
+nav_order: 1
+---
 
 A logger for use with [fp-ts].
 

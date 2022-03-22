@@ -14,12 +14,14 @@
     "@commitlint/config-conventional": "^16.2.1",
     "@trivago/prettier-plugin-sort-imports": "^3.2.0",
     "@tsconfig/recommended": "^1.0.1",
+    "docs-ts": "^0.6.10",
     "husky": "^7.0.4",
     "prettier": "^2.6.0",
     "prettier-plugin-sh": "^0.8.1",
     "typescript": "^4.6.2"
   },
   "scripts": {
+    "docs": "docs-ts",
     "format": "prettier --ignore-unknown --check '**'",
     "format:fix": "npm run format -- --write",
     "prepare": "which husky && husky install || true",
