@@ -5,6 +5,9 @@
   "license": "MIT",
   "homepage": "https://github.com/thewilkybarkid/logger-ts",
   "repository": "github:thewilkybarkid/logger-ts",
+  "source": "src/index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "sideEffects": false,
   "peerDependencies": {
     "logging-ts": "^0.3.4"
@@ -14,6 +17,7 @@
     "@commitlint/config-conventional": "^16.2.1",
     "@trivago/prettier-plugin-sort-imports": "^3.2.0",
     "@tsconfig/recommended": "^1.0.1",
+    "del-cli": "^4.0.1",
     "docs-ts": "^0.6.10",
     "husky": "^7.0.4",
     "prettier": "^2.6.0",
@@ -21,6 +25,8 @@
     "typescript": "^4.6.2"
   },
   "scripts": {
+    "prebuild": "del dist",
+    "build": "tsc --project tsconfig.build.json",
     "docs": "docs-ts",
     "format": "prettier --ignore-unknown --check '**'",
     "format:fix": "npm run format -- --write",
