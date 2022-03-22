@@ -1,3 +1,5 @@
+import { FixedClock } from 'clock-ts'
+import * as I from 'fp-ts/IO'
 import * as _ from '../src'
 import * as fc from './fc'
 
@@ -11,6 +13,64 @@ describe('logger-ts', () => {
             date,
             level,
           })
+        }),
+      )
+    })
+  })
+
+  describe('instances', () => {
+    test('debug', () => {
+      fc.assert(
+        fc.property(fc.string(), fc.date(), (message, date) => {
+          const logs: Array<_.LogEntry> = []
+          const logger: _.Logger = message => I.of(logs.push(message))
+          const clock = FixedClock(date)
+
+          _.debug(message)({ clock, logger })()
+
+          expect(logs).toStrictEqual([{ message, date, level: 'DEBUG' }])
+        }),
+      )
+    })
+
+    test('info', () => {
+      fc.assert(
+        fc.property(fc.string(), fc.date(), (message, date) => {
+          const logs: Array<_.LogEntry> = []
+          const logger: _.Logger = message => I.of(logs.push(message))
+          const clock = FixedClock(date)
+
+          _.info(message)({ clock, logger })()
+
+          expect(logs).toStrictEqual([{ message, date, level: 'INFO' }])
+        }),
+      )
+    })
+
+    test('warn', () => {
+      fc.assert(
+        fc.property(fc.string(), fc.date(), (message, date) => {
+          const logs: Array<_.LogEntry> = []
+          const logger: _.Logger = message => I.of(logs.push(message))
+          const clock = FixedClock(date)
+
+          _.warn(message)({ clock, logger })()
+
+          expect(logs).toStrictEqual([{ message, date, level: 'WARN' }])
+        }),
+      )
+    })
+
+    test('error', () => {
+      fc.assert(
+        fc.property(fc.string(), fc.date(), (message, date) => {
+          const logs: Array<_.LogEntry> = []
+          const logger: _.Logger = message => I.of(logs.push(message))
+          const clock = FixedClock(date)
+
+          _.error(message)({ clock, logger })()
+
+          expect(logs).toStrictEqual([{ message, date, level: 'ERROR' }])
         }),
       )
     })

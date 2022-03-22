@@ -14,10 +14,16 @@ Added in v0.1.0
 
 - [constructors](#constructors)
   - [LogEntry](#logentry)
+- [instances](#instances)
+  - [debug](#debug)
+  - [error](#error)
+  - [info](#info)
+  - [warn](#warn)
 - [model](#model)
   - [LogEntry (interface)](#logentry-interface)
   - [LogLevel (type alias)](#loglevel-type-alias)
   - [Logger (type alias)](#logger-type-alias)
+  - [LoggerEnv (interface)](#loggerenv-interface)
 
 ---
 
@@ -29,6 +35,48 @@ Added in v0.1.0
 
 ```ts
 export declare const LogEntry: (message: string, date: Date, level: LogLevel) => LogEntry
+```
+
+Added in v0.1.0
+
+# instances
+
+## debug
+
+**Signature**
+
+```ts
+export declare const debug: (message: string) => ReaderIO<LoggerEnv, void>
+```
+
+Added in v0.1.0
+
+## error
+
+**Signature**
+
+```ts
+export declare const error: (message: string) => ReaderIO<LoggerEnv, void>
+```
+
+Added in v0.1.0
+
+## info
+
+**Signature**
+
+```ts
+export declare const info: (message: string) => ReaderIO<LoggerEnv, void>
+```
+
+Added in v0.1.0
+
+## warn
+
+**Signature**
+
+```ts
+export declare const warn: (message: string) => ReaderIO<LoggerEnv, void>
 ```
 
 Added in v0.1.0
@@ -65,6 +113,18 @@ Added in v0.1.0
 
 ```ts
 export type Logger = LoggerIO<LogEntry>
+```
+
+Added in v0.1.0
+
+## LoggerEnv (interface)
+
+**Signature**
+
+```ts
+export interface LoggerEnv extends ClockEnv {
+  logger: Logger
+}
 ```
 
 Added in v0.1.0

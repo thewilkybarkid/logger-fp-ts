@@ -10,6 +10,9 @@
   "types": "dist/index.d.ts",
   "sideEffects": false,
   "peerDependencies": {
+    "clock-ts": "^0.1.0",
+    "fp-ts": "^2.11.0",
+    "fp-ts-contrib": "^0.1.0",
     "logging-ts": "^0.3.4"
   },
   "devDependencies": {
