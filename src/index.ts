@@ -30,3 +30,17 @@ export interface LogEntry {
   readonly date: Date
   readonly level: LogLevel
 }
+
+// -------------------------------------------------------------------------------------
+// constructors
+// -------------------------------------------------------------------------------------
+
+/**
+ * @category constructors
+ * @since 0.1.0
+ */
+export const LogEntry = (message: string, date: Date, level: LogLevel): LogEntry => ({
+  message,
+  date,
+  level,
+})

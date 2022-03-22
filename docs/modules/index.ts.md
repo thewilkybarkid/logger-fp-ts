@@ -12,12 +12,26 @@ Added in v0.1.0
 
 <h2 class="text-delta">Table of contents</h2>
 
+- [constructors](#constructors)
+  - [LogEntry](#logentry)
 - [model](#model)
   - [LogEntry (interface)](#logentry-interface)
   - [LogLevel (type alias)](#loglevel-type-alias)
   - [Logger (type alias)](#logger-type-alias)
 
 ---
+
+# constructors
+
+## LogEntry
+
+**Signature**
+
+```ts
+export declare const LogEntry: (message: string, date: Date, level: LogLevel) => LogEntry
+```
+
+Added in v0.1.0
 
 # model
 
