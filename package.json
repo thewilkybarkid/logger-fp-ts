@@ -17,8 +17,12 @@
     "@commitlint/config-conventional": "^16.2.1",
     "@trivago/prettier-plugin-sort-imports": "^3.2.0",
     "@tsconfig/recommended": "^1.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.16.0",
+    "@typescript-eslint/parser": "^5.16.0",
     "del-cli": "^4.0.1",
     "docs-ts": "^0.6.10",
+    "eslint": "^8.11.0",
+    "eslint-config-prettier": "^8.5.0",
     "husky": "^7.0.4",
     "prettier": "^2.6.0",
     "prettier-plugin-sh": "^0.8.1",
@@ -30,6 +34,7 @@
     "docs": "docs-ts",
     "format": "prettier --ignore-unknown --check '**'",
     "format:fix": "npm run format -- --write",
+    "lint": "eslint .",
     "prepare": "which husky && husky install || true",
     "typecheck": "tsc --noEmit"
   }
