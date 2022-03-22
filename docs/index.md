@@ -12,7 +12,7 @@ import { SystemClock } from 'clock-ts'
 import * as RIO from 'fp-ts-contrib/ReaderIO'
 import * as C from 'fp-ts/Console'
 import { pipe } from 'fp-ts/function'
-import * as L from '.'
+import * as L from 'logger-fp-ts'
 
 const env: L.LoggerEnv = {
   clock: SystemClock,

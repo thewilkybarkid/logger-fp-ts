@@ -1,4 +1,4 @@
-# logger-ts
+# logger-fp-ts
 
 A logger for use with [fp-ts].
 
@@ -7,12 +7,12 @@ A logger for use with [fp-ts].
 To install the stable version:
 
 ```sh
-npm install logger-ts
+npm install logger-fp-ts
 ```
 
 ## Documentation
 
 [📘 Read the documentation][docs]
 
-[docs]: https://thewilkybarkid.github.io/logger-ts/
+[docs]: https://thewilkybarkid.github.io/logger-fp-ts/
 [fp-ts]: https://gcanti.github.io/fp-ts/

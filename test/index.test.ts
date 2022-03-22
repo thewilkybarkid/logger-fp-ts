@@ -3,7 +3,7 @@ import * as I from 'fp-ts/IO'
 import * as _ from '../src'
 import * as fc from './fc'
 
-describe('logger-ts', () => {
+describe('logger-fp-ts', () => {
   describe('constructors', () => {
     test('LogEntry', () => {
       fc.assert(
