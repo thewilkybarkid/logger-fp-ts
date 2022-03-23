@@ -13,10 +13,11 @@ import * as RIO from 'fp-ts-contrib/ReaderIO'
 import * as C from 'fp-ts/Console'
 import { pipe } from 'fp-ts/function'
 import * as L from 'logger-fp-ts'
+import { contramap } from 'logging-ts/lib/IO'
 
 const env: L.LoggerEnv = {
   clock: SystemClock,
-  logger: C.log,
+  logger: pipe(C.log, contramap(L.ShowLogEntry.show)),
 }
 
 pipe(
@@ -24,11 +25,7 @@ pipe(
   RIO.chainFirst(() => L.info('Some action was performed')),
 )(env)()
 /*
-{
-  message: 'Some action was performed',
-  date: 2022-03-22T15:25:06.269Z,
-  level: 'INFO'
-}
+2022-03-23T13:53:03.694Z | INFO | Some action was performed
 */
 ```
 

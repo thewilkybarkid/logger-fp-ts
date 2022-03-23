@@ -19,6 +19,34 @@ describe('logger-fp-ts', () => {
   })
 
   describe('instances', () => {
+    test('ShowLogEntry', () => {
+      fc.assert(
+        fc.property(fc.logEntry(), logEntry => {
+          expect(_.ShowLogEntry.show(logEntry)).toStrictEqual(
+            `${logEntry.date.toISOString()} | ${logEntry.level} | ${logEntry.message}`,
+          )
+        }),
+      )
+    })
+
+    describe('EqLogEntry', () => {
+      test('with the same data', () => {
+        fc.assert(
+          fc.property(fc.logEntry(), logEntry => {
+            expect(_.EqLogEntry.equals(logEntry, logEntry)).toStrictEqual(true)
+          }),
+        )
+      })
+
+      test('with different data', () => {
+        fc.assert(
+          fc.property(fc.logEntry(), fc.logEntry(), (x, y) => {
+            expect(_.EqLogEntry.equals(x, y)).toStrictEqual(false)
+          }),
+        )
+      })
+    })
+
     test('debug', () => {
       fc.assert(
         fc.property(fc.string(), fc.date(), (message, date) => {

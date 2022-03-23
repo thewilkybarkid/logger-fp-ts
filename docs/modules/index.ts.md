@@ -15,6 +15,8 @@ Added in v0.1.0
 - [constructors](#constructors)
   - [LogEntry](#logentry)
 - [instances](#instances)
+  - [EqLogEntry](#eqlogentry)
+  - [ShowLogEntry](#showlogentry)
   - [debug](#debug)
   - [error](#error)
   - [info](#info)
@@ -40,6 +42,26 @@ export declare const LogEntry: (message: string, date: Date, level: LogLevel) =>
 Added in v0.1.0
 
 # instances
+
+## EqLogEntry
+
+**Signature**
+
+```ts
+export declare const EqLogEntry: E.Eq<LogEntry>
+```
+
+Added in v0.1.2
+
+## ShowLogEntry
+
+**Signature**
+
+```ts
+export declare const ShowLogEntry: S.Show<LogEntry>
+```
+
+Added in v0.1.2
 
 ## debug
 

@@ -3,11 +3,17 @@
  */
 import { ClockEnv, now } from 'clock-ts'
 import * as RIO from 'fp-ts-contrib/ReaderIO'
+import * as d from 'fp-ts/Date'
+import * as E from 'fp-ts/Eq'
+import * as S from 'fp-ts/Show'
 import { pipe } from 'fp-ts/function'
+import * as s from 'fp-ts/string'
 import * as L from 'logging-ts/lib/IO'
 
+import Eq = E.Eq
 import LoggerIO = L.LoggerIO
 import ReaderIO = RIO.ReaderIO
+import Show = S.Show
 
 // -------------------------------------------------------------------------------------
 // model
@@ -78,6 +84,24 @@ const logAtLevel: (level: LogLevel) => (message: string) => ReaderIO<LoggerEnv, 
 // -------------------------------------------------------------------------------------
 // instances
 // -------------------------------------------------------------------------------------
+
+/**
+ * @category instances
+ * @since 0.1.2
+ */
+export const ShowLogEntry: Show<LogEntry> = {
+  show: ({ message, date, level }) => `${date.toISOString()} | ${level} | ${message}`,
+}
+
+/**
+ * @category instances
+ * @since 0.1.2
+ */
+export const EqLogEntry: Eq<LogEntry> = E.struct({
+  message: s.Eq,
+  date: d.Eq,
+  level: s.Eq,
+})
 
 /**
  * @category instances
