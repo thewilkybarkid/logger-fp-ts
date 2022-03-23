@@ -1,12 +1,13 @@
 /**
  * @since 0.1.0
  */
+import chalk from 'chalk'
 import { ClockEnv, now } from 'clock-ts'
 import * as RIO from 'fp-ts-contrib/ReaderIO'
 import * as d from 'fp-ts/Date'
 import * as E from 'fp-ts/Eq'
 import * as S from 'fp-ts/Show'
-import { pipe } from 'fp-ts/function'
+import { flow, pipe } from 'fp-ts/function'
 import * as s from 'fp-ts/string'
 import * as L from 'logging-ts/lib/IO'
 
@@ -78,6 +79,22 @@ export const withShow: (show: Show<LogEntry>) => (fa: LoggerIO<string>) => Logge
   L.contramap(show.show)
 
 // -------------------------------------------------------------------------------------
+// destructors
+// -------------------------------------------------------------------------------------
+
+/**
+ * @category destructors
+ * @since 0.1.2
+ */
+export const match =
+  <R>(patterns: {
+    readonly [K in LogLevel]: (entry: LogEntry) => R
+  }) =>
+  (entry: LogEntry) => {
+    return patterns[entry.level](entry)
+  }
+
+// -------------------------------------------------------------------------------------
 // utils
 // -------------------------------------------------------------------------------------
 
@@ -106,6 +123,21 @@ const logAtLevel: (level: LogLevel) => (message: string) => ReaderIO<LoggerEnv, 
 export const ShowLogEntry: Show<LogEntry> = {
   show: ({ message, date, level }) => `${date.toISOString()} | ${level} | ${message}`,
 }
+
+/**
+ * Colorizes log entries based on the level.
+ *
+ * @category instances
+ * @since 0.1.2
+ */
+export const getColoredShow: (show: Show<LogEntry>) => Show<LogEntry> = ({ show }) => ({
+  show: match({
+    DEBUG: flow(show, chalk.cyan),
+    INFO: flow(show, chalk.magenta),
+    WARN: flow(show, chalk.yellow),
+    ERROR: flow(show, chalk.red),
+  }),
+})
 
 /**
  * @category instances

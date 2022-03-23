@@ -33,6 +33,23 @@ describe('logger-fp-ts', () => {
     })
   })
 
+  describe('destructors', () => {
+    test('match', () => {
+      fc.assert(
+        fc.property(fc.logEntry(), logEntry => {
+          const f = _.match({
+            DEBUG: logEntry => logEntry.level,
+            INFO: logEntry => logEntry.level,
+            WARN: logEntry => logEntry.level,
+            ERROR: logEntry => logEntry.level,
+          })
+
+          expect(f(logEntry)).toBe(logEntry.level)
+        }),
+      )
+    })
+  })
+
   describe('instances', () => {
     test('ShowLogEntry', () => {
       fc.assert(
@@ -42,6 +59,48 @@ describe('logger-fp-ts', () => {
           )
         }),
       )
+    })
+
+    describe('getColoredShow', () => {
+      test('with a DEBUG', () => {
+        fc.assert(
+          fc.property(fc.logEntry('DEBUG'), logEntry => {
+            const show = _.getColoredShow({ show: logEntry => logEntry.date.toISOString() })
+
+            expect(show.show(logEntry)).toStrictEqual(`\x1b[36m${logEntry.date.toISOString()}\x1b[39m`)
+          }),
+        )
+      })
+
+      test('with an INFO', () => {
+        fc.assert(
+          fc.property(fc.logEntry('INFO'), logEntry => {
+            const show = _.getColoredShow({ show: logEntry => logEntry.date.toISOString() })
+
+            expect(show.show(logEntry)).toStrictEqual(`\x1b[35m${logEntry.date.toISOString()}\x1b[39m`)
+          }),
+        )
+      })
+
+      test('with a WARN', () => {
+        fc.assert(
+          fc.property(fc.logEntry('WARN'), logEntry => {
+            const show = _.getColoredShow({ show: logEntry => logEntry.date.toISOString() })
+
+            expect(show.show(logEntry)).toStrictEqual(`\x1b[33m${logEntry.date.toISOString()}\x1b[39m`)
+          }),
+        )
+      })
+
+      test('with an ERROR', () => {
+        fc.assert(
+          fc.property(fc.logEntry('ERROR'), logEntry => {
+            const show = _.getColoredShow({ show: logEntry => logEntry.date.toISOString() })
+
+            expect(show.show(logEntry)).toStrictEqual(`\x1b[31m${logEntry.date.toISOString()}\x1b[39m`)
+          }),
+        )
+      })
     })
 
     describe('EqLogEntry', () => {

@@ -15,11 +15,14 @@ Added in v0.1.0
 - [constructors](#constructors)
   - [LogEntry](#logentry)
   - [withShow](#withshow)
+- [destructors](#destructors)
+  - [match](#match)
 - [instances](#instances)
   - [EqLogEntry](#eqlogentry)
   - [ShowLogEntry](#showlogentry)
   - [debug](#debug)
   - [error](#error)
+  - [getColoredShow](#getcoloredshow)
   - [info](#info)
   - [warn](#warn)
 - [model](#model)
@@ -58,6 +61,23 @@ import { pipe } from 'fp-ts/function'
 import * as L from 'logger-fp-ts'
 
 const logger = pipe(C.log, L.withShow(L.ShowLogEntry))
+```
+
+Added in v0.1.2
+
+# destructors
+
+## match
+
+**Signature**
+
+```ts
+export declare const match: <R>(patterns: {
+  readonly DEBUG: (entry: LogEntry) => R
+  readonly INFO: (entry: LogEntry) => R
+  readonly WARN: (entry: LogEntry) => R
+  readonly ERROR: (entry: LogEntry) => R
+}) => (entry: LogEntry) => R
 ```
 
 Added in v0.1.2
@@ -103,6 +123,18 @@ export declare const error: (message: string) => ReaderIO<LoggerEnv, void>
 ```
 
 Added in v0.1.0
+
+## getColoredShow
+
+Colorizes log entries based on the level.
+
+**Signature**
+
+```ts
+export declare const getColoredShow: (show: Show<LogEntry>) => Show<LogEntry>
+```
+
+Added in v0.1.2
 
 ## info
 

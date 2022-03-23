@@ -5,9 +5,9 @@ export * from 'fast-check'
 
 export const logLevel = (): fc.Arbitrary<_.LogLevel> => fc.constantFrom('DEBUG', 'INFO', 'WARN', 'ERROR')
 
-export const logEntry = (): fc.Arbitrary<_.LogEntry> =>
+export const logEntry = (level?: _.LogLevel): fc.Arbitrary<_.LogEntry> =>
   fc.record({
     date: fc.date(),
     message: fc.string(),
-    level: logLevel(),
+    level: level ? fc.constant(level) : logLevel(),
   })
