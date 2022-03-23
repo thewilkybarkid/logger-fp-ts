@@ -14,6 +14,7 @@ Added in v0.1.0
 
 - [constructors](#constructors)
   - [LogEntry](#logentry)
+  - [withShow](#withshow)
 - [instances](#instances)
   - [EqLogEntry](#eqlogentry)
   - [ShowLogEntry](#showlogentry)
@@ -40,6 +41,26 @@ export declare const LogEntry: (message: string, date: Date, level: LogLevel) =>
 ```
 
 Added in v0.1.0
+
+## withShow
+
+**Signature**
+
+```ts
+export declare const withShow: (show: Show<LogEntry>) => (fa: LoggerIO<string>) => Logger
+```
+
+**Example**
+
+```ts
+import * as C from 'fp-ts/Console'
+import { pipe } from 'fp-ts/function'
+import * as L from 'logger-fp-ts'
+
+const logger = pipe(C.log, L.withShow(L.ShowLogEntry))
+```
+
+Added in v0.1.2
 
 # instances
 

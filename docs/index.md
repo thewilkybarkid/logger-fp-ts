@@ -13,11 +13,10 @@ import * as RIO from 'fp-ts-contrib/ReaderIO'
 import * as C from 'fp-ts/Console'
 import { pipe } from 'fp-ts/function'
 import * as L from 'logger-fp-ts'
-import { contramap } from 'logging-ts/lib/IO'
 
 const env: L.LoggerEnv = {
   clock: SystemClock,
-  logger: pipe(C.log, contramap(L.ShowLogEntry.show)),
+  logger: pipe(C.log, L.withShow(L.ShowLogEntry)),
 }
 
 pipe(

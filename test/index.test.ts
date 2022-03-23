@@ -16,6 +16,21 @@ describe('logger-fp-ts', () => {
         }),
       )
     })
+
+    test('withShow', () => {
+      fc.assert(
+        fc.property(fc.logEntry(), logEntry => {
+          const logs: Array<string> = []
+          const logger = (message: string) => I.of(logs.push(message))
+          const show = jest.fn(() => '')
+
+          _.withShow({ show })(logger)(logEntry)()
+
+          expect(logs).toHaveLength(1)
+          expect(show).toHaveBeenCalledWith(logEntry)
+        }),
+      )
+    })
   })
 
   describe('instances', () => {

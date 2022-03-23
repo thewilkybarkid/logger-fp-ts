@@ -63,6 +63,20 @@ export const LogEntry = (message: string, date: Date, level: LogLevel): LogEntry
   level,
 })
 
+/**
+ * @example
+ * import * as C from 'fp-ts/Console'
+ * import { pipe } from 'fp-ts/function'
+ * import * as L from 'logger-fp-ts'
+ *
+ * const logger = pipe(C.log, L.withShow(L.ShowLogEntry))
+ *
+ * @category constructors
+ * @since 0.1.2
+ */
+export const withShow: (show: Show<LogEntry>) => (fa: LoggerIO<string>) => Logger = (show: Show<LogEntry>) =>
+  L.contramap(show.show)
+
 // -------------------------------------------------------------------------------------
 // utils
 // -------------------------------------------------------------------------------------
