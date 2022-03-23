@@ -101,6 +101,17 @@ describe('logger-fp-ts', () => {
           }),
         )
       })
+
+      let forceColor: string | undefined
+
+      beforeAll(() => {
+        forceColor = process.env.FORCE_COLOR
+        process.env.FORCE_COLOR = 'true'
+      })
+
+      afterAll(() => {
+        process.env.FORCE_COLOR = forceColor
+      })
     })
 
     describe('EqLogEntry', () => {
