@@ -20,11 +20,13 @@ const env: L.LoggerEnv = {
 }
 
 pipe(
-  RIO.of('Result of an action'),
+  RIO.of({ result: 'Result of an action' }),
   RIO.chainFirst(() => L.info('Some action was performed')),
+  RIO.chainFirst(L.debugP("And here's the details")),
 )(env)()
 /*
-2022-03-23T13:53:03.694Z | INFO | Some action was performed
+2022-03-28T14:07:57.250Z | INFO | Some action was performed
+2022-03-28T14:07:57.254Z | DEBUG | And here's the details | {"result":"Result of an action"}
 */
 ```
 

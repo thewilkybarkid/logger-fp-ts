@@ -1,5 +1,7 @@
 import { FixedClock } from 'clock-ts'
 import * as I from 'fp-ts/IO'
+import safeStringify from 'safe-stable-stringify'
+import sortObject from 'sortobject'
 import * as _ from '../src'
 import * as fc from './fc'
 
@@ -7,11 +9,12 @@ describe('logger-fp-ts', () => {
   describe('constructors', () => {
     test('LogEntry', () => {
       fc.assert(
-        fc.property(fc.string(), fc.date(), fc.logLevel(), (message, date, level) => {
-          expect(_.LogEntry(message, date, level)).toStrictEqual({
+        fc.property(fc.string(), fc.date(), fc.logLevel(), fc.jsonRecord(), (message, date, level, payload) => {
+          expect(_.LogEntry(message, date, level, payload)).toStrictEqual({
             message,
             date,
             level,
+            payload,
           })
         }),
       )
@@ -51,20 +54,37 @@ describe('logger-fp-ts', () => {
   })
 
   describe('instances', () => {
-    test('ShowLogEntry', () => {
-      fc.assert(
-        fc.property(fc.logEntry(), logEntry => {
-          expect(_.ShowLogEntry.show(logEntry)).toStrictEqual(
-            `${logEntry.date.toISOString()} | ${logEntry.level} | ${logEntry.message}`,
-          )
-        }),
-      )
+    describe('ShowLogEntry', () => {
+      test('with a payload', () => {
+        fc.assert(
+          fc.property(
+            fc.logEntry().filter(logEntry => Object.keys(logEntry.payload).length > 0),
+            logEntry => {
+              expect(_.ShowLogEntry.show(logEntry)).toStrictEqual(
+                `${logEntry.date.toISOString()} | ${logEntry.level} | ${logEntry.message} | ${safeStringify(
+                  logEntry.payload,
+                )}`,
+              )
+            },
+          ),
+        )
+      })
+
+      test('without a payload', () => {
+        fc.assert(
+          fc.property(fc.logEntry({ payload: {} }), logEntry => {
+            expect(_.ShowLogEntry.show(logEntry)).toStrictEqual(
+              `${logEntry.date.toISOString()} | ${logEntry.level} | ${logEntry.message}`,
+            )
+          }),
+        )
+      })
     })
 
     describe('getColoredShow', () => {
       test('with a DEBUG', () => {
         fc.assert(
-          fc.property(fc.logEntry('DEBUG'), logEntry => {
+          fc.property(fc.logEntry({ level: 'DEBUG' }), logEntry => {
             const show = _.getColoredShow({ show: logEntry => logEntry.date.toISOString() })
 
             expect(show.show(logEntry)).toStrictEqual(`\x1b[36m${logEntry.date.toISOString()}\x1b[39m`)
@@ -74,7 +94,7 @@ describe('logger-fp-ts', () => {
 
       test('with an INFO', () => {
         fc.assert(
-          fc.property(fc.logEntry('INFO'), logEntry => {
+          fc.property(fc.logEntry({ level: 'INFO' }), logEntry => {
             const show = _.getColoredShow({ show: logEntry => logEntry.date.toISOString() })
 
             expect(show.show(logEntry)).toStrictEqual(`\x1b[35m${logEntry.date.toISOString()}\x1b[39m`)
@@ -84,7 +104,7 @@ describe('logger-fp-ts', () => {
 
       test('with a WARN', () => {
         fc.assert(
-          fc.property(fc.logEntry('WARN'), logEntry => {
+          fc.property(fc.logEntry({ level: 'WARN' }), logEntry => {
             const show = _.getColoredShow({ show: logEntry => logEntry.date.toISOString() })
 
             expect(show.show(logEntry)).toStrictEqual(`\x1b[33m${logEntry.date.toISOString()}\x1b[39m`)
@@ -94,7 +114,7 @@ describe('logger-fp-ts', () => {
 
       test('with an ERROR', () => {
         fc.assert(
-          fc.property(fc.logEntry('ERROR'), logEntry => {
+          fc.property(fc.logEntry({ level: 'ERROR' }), logEntry => {
             const show = _.getColoredShow({ show: logEntry => logEntry.date.toISOString() })
 
             expect(show.show(logEntry)).toStrictEqual(`\x1b[31m${logEntry.date.toISOString()}\x1b[39m`)
@@ -119,6 +139,30 @@ describe('logger-fp-ts', () => {
           }),
         )
       })
+
+      test('with payload in a different order', () => {
+        fc.assert(
+          fc.property(fc.logEntry(), x => {
+            const y = { ...x, payload: sortObject(x.payload) }
+
+            expect(_.EqLogEntry.equals(x, y)).toStrictEqual(true)
+          }),
+        )
+      })
+    })
+
+    test('debugP', () => {
+      fc.assert(
+        fc.property(fc.string(), fc.date(), fc.jsonRecord(), (message, date, payload) => {
+          const logs: Array<_.LogEntry> = []
+          const logger: _.Logger = message => I.of(logs.push(message))
+          const clock = FixedClock(date)
+
+          _.debugP(message)(payload)({ clock, logger })()
+
+          expect(logs).toStrictEqual([{ message, date, level: 'DEBUG', payload }])
+        }),
+      )
     })
 
     test('debug', () => {
@@ -130,7 +174,21 @@ describe('logger-fp-ts', () => {
 
           _.debug(message)({ clock, logger })()
 
-          expect(logs).toStrictEqual([{ message, date, level: 'DEBUG' }])
+          expect(logs).toStrictEqual([{ message, date, level: 'DEBUG', payload: {} }])
+        }),
+      )
+    })
+
+    test('infoP', () => {
+      fc.assert(
+        fc.property(fc.string(), fc.date(), fc.jsonRecord(), (message, date, payload) => {
+          const logs: Array<_.LogEntry> = []
+          const logger: _.Logger = message => I.of(logs.push(message))
+          const clock = FixedClock(date)
+
+          _.infoP(message)(payload)({ clock, logger })()
+
+          expect(logs).toStrictEqual([{ message, date, level: 'INFO', payload }])
         }),
       )
     })
@@ -144,7 +202,21 @@ describe('logger-fp-ts', () => {
 
           _.info(message)({ clock, logger })()
 
-          expect(logs).toStrictEqual([{ message, date, level: 'INFO' }])
+          expect(logs).toStrictEqual([{ message, date, level: 'INFO', payload: {} }])
+        }),
+      )
+    })
+
+    test('warnP', () => {
+      fc.assert(
+        fc.property(fc.string(), fc.date(), fc.jsonRecord(), (message, date, payload) => {
+          const logs: Array<_.LogEntry> = []
+          const logger: _.Logger = message => I.of(logs.push(message))
+          const clock = FixedClock(date)
+
+          _.warnP(message)(payload)({ clock, logger })()
+
+          expect(logs).toStrictEqual([{ message, date, level: 'WARN', payload }])
         }),
       )
     })
@@ -158,7 +230,21 @@ describe('logger-fp-ts', () => {
 
           _.warn(message)({ clock, logger })()
 
-          expect(logs).toStrictEqual([{ message, date, level: 'WARN' }])
+          expect(logs).toStrictEqual([{ message, date, level: 'WARN', payload: {} }])
+        }),
+      )
+    })
+
+    test('errorP', () => {
+      fc.assert(
+        fc.property(fc.string(), fc.date(), fc.jsonRecord(), (message, date, payload) => {
+          const logs: Array<_.LogEntry> = []
+          const logger: _.Logger = message => I.of(logs.push(message))
+          const clock = FixedClock(date)
+
+          _.errorP(message)(payload)({ clock, logger })()
+
+          expect(logs).toStrictEqual([{ message, date, level: 'ERROR', payload }])
         }),
       )
     })
@@ -172,7 +258,7 @@ describe('logger-fp-ts', () => {
 
           _.error(message)({ clock, logger })()
 
-          expect(logs).toStrictEqual([{ message, date, level: 'ERROR' }])
+          expect(logs).toStrictEqual([{ message, date, level: 'ERROR', payload: {} }])
         }),
       )
     })

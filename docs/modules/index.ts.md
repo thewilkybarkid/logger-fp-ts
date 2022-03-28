@@ -21,10 +21,14 @@ Added in v0.1.0
   - [EqLogEntry](#eqlogentry)
   - [ShowLogEntry](#showlogentry)
   - [debug](#debug)
+  - [debugP](#debugp)
   - [error](#error)
+  - [errorP](#errorp)
   - [getColoredShow](#getcoloredshow)
   - [info](#info)
+  - [infoP](#infop)
   - [warn](#warn)
+  - [warnP](#warnp)
 - [model](#model)
   - [LogEntry (interface)](#logentry-interface)
   - [LogLevel (type alias)](#loglevel-type-alias)
@@ -40,7 +44,7 @@ Added in v0.1.0
 **Signature**
 
 ```ts
-export declare const LogEntry: (message: string, date: Date, level: LogLevel) => LogEntry
+export declare const LogEntry: (message: string, date: Date, level: LogLevel, payload: JsonRecord) => LogEntry
 ```
 
 Added in v0.1.0
@@ -106,6 +110,8 @@ Added in v0.1.2
 
 ## debug
 
+Log a 'DEBUG' message.
+
 **Signature**
 
 ```ts
@@ -114,7 +120,21 @@ export declare const debug: (message: string) => ReaderIO<LoggerEnv, void>
 
 Added in v0.1.0
 
+## debugP
+
+Log a 'DEBUG' message with a payload.
+
+**Signature**
+
+```ts
+export declare const debugP: (message: string) => (payload: JsonRecord) => ReaderIO<LoggerEnv, void>
+```
+
+Added in v0.2.0
+
 ## error
+
+Log an 'ERROR' message.
 
 **Signature**
 
@@ -123,6 +143,18 @@ export declare const error: (message: string) => ReaderIO<LoggerEnv, void>
 ```
 
 Added in v0.1.0
+
+## errorP
+
+Log an 'ERROR' message with a payload.
+
+**Signature**
+
+```ts
+export declare const errorP: (message: string) => (payload: JsonRecord) => ReaderIO<LoggerEnv, void>
+```
+
+Added in v0.2.0
 
 ## getColoredShow
 
@@ -138,6 +170,8 @@ Added in v0.1.2
 
 ## info
 
+Log an 'INFO' message.
+
 **Signature**
 
 ```ts
@@ -146,7 +180,21 @@ export declare const info: (message: string) => ReaderIO<LoggerEnv, void>
 
 Added in v0.1.0
 
+## infoP
+
+Log an 'INFO' message with a payload.
+
+**Signature**
+
+```ts
+export declare const infoP: (message: string) => (payload: JsonRecord) => ReaderIO<LoggerEnv, void>
+```
+
+Added in v0.2.0
+
 ## warn
+
+Log a 'WARN' message.
 
 **Signature**
 
@@ -155,6 +203,18 @@ export declare const warn: (message: string) => ReaderIO<LoggerEnv, void>
 ```
 
 Added in v0.1.0
+
+## warnP
+
+Log a 'WARN' message with a payload.
+
+**Signature**
+
+```ts
+export declare const warnP: (message: string) => (payload: JsonRecord) => ReaderIO<LoggerEnv, void>
+```
+
+Added in v0.2.0
 
 # model
 
@@ -167,6 +227,7 @@ export interface LogEntry {
   readonly message: string
   readonly date: Date
   readonly level: LogLevel
+  readonly payload: JsonRecord
 }
 ```
 
