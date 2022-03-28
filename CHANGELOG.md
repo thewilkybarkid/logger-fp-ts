@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/thewilkybarkid/logger-fp-ts/compare/v0.1.2...v0.2.0) (2022-03-28)
+
+
+### Features
+
+* add payloads to log messages ([9f8e6c6](https://github.com/thewilkybarkid/logger-fp-ts/commit/9f8e6c688613b9e39884e266c581b05a2a76d6ab))
+
 ### [0.1.2](https://github.com/thewilkybarkid/logger-fp-ts/compare/v0.1.1...v0.1.2) (2022-03-23)
 
 
