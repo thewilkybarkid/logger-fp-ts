@@ -51,7 +51,7 @@ export interface LogEntry {
  * @since 0.1.0
  */
 export interface LoggerEnv extends ClockEnv {
-  logger: Logger
+  readonly logger: Logger
 }
 
 // -------------------------------------------------------------------------------------

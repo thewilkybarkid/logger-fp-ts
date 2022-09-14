@@ -259,7 +259,7 @@ Added in v0.1.0
 
 ```ts
 export interface LoggerEnv extends ClockEnv {
-  logger: Logger
+  readonly logger: Logger
 }
 ```
 
