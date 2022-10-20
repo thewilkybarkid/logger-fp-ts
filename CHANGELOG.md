@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.1](https://github.com/thewilkybarkid/logger-fp-ts/compare/v0.2.0...v0.2.1) (2022-10-20)
+
+
+### Features
+
+* remove fp-ts-contrib dependency ([a6e4551](https://github.com/thewilkybarkid/logger-fp-ts/commit/a6e4551166e1a0b40a377bcd5642865bbda1439b))
+
+
+### Bug Fixes
+
+* make the environment immutable ([9461a75](https://github.com/thewilkybarkid/logger-fp-ts/commit/9461a750cae3951eb8ea10f0198eb5243b19d295))
+
 ## [0.2.0](https://github.com/thewilkybarkid/logger-fp-ts/compare/v0.1.2...v0.2.0) (2022-03-28)
 
 
