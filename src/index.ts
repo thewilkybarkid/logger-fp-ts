@@ -3,10 +3,10 @@
  */
 import chalk from 'chalk'
 import { ClockEnv, now } from 'clock-ts'
-import * as RIO from 'fp-ts-contrib/ReaderIO'
 import * as d from 'fp-ts/Date'
 import * as E from 'fp-ts/Eq'
 import * as Json from 'fp-ts/Json'
+import * as RIO from 'fp-ts/ReaderIO'
 import * as S from 'fp-ts/Show'
 import { apply, flow, pipe } from 'fp-ts/function'
 import * as s from 'fp-ts/string'
