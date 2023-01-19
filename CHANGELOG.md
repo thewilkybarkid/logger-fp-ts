@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.2](https://github.com/thewilkybarkid/logger-fp-ts/compare/v0.2.1...v0.2.2) (2023-01-19)
+
+
+### Features
+
+* add JSON Show instance ([8e19bcb](https://github.com/thewilkybarkid/logger-fp-ts/commit/8e19bcbaa5b1068879a9a64a2ba9f40644938824))
+
 ### [0.2.1](https://github.com/thewilkybarkid/logger-fp-ts/compare/v0.2.0...v0.2.1) (2022-10-20)
 
 
