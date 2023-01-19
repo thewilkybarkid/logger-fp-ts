@@ -19,6 +19,7 @@ Added in v0.1.0
   - [match](#match)
 - [instances](#instances)
   - [EqLogEntry](#eqlogentry)
+  - [JsonShowLogEntry](#jsonshowlogentry)
   - [ShowLogEntry](#showlogentry)
   - [debug](#debug)
   - [debugP](#debugp)
@@ -97,6 +98,16 @@ export declare const EqLogEntry: E.Eq<LogEntry>
 ```
 
 Added in v0.1.2
+
+## JsonShowLogEntry
+
+**Signature**
+
+```ts
+export declare const JsonShowLogEntry: S.Show<LogEntry>
+```
+
+Added in v0.2.2
 
 ## ShowLogEntry
 

@@ -81,6 +81,19 @@ describe('logger-fp-ts', () => {
       })
     })
 
+    test('JsonShowLogEntry', () => {
+      fc.assert(
+        fc.property(fc.logEntry(), logEntry => {
+          expect(JSON.parse(_.JsonShowLogEntry.show(logEntry))).toStrictEqual({
+            date: logEntry.date.toISOString(),
+            level: logEntry.level,
+            message: logEntry.message,
+            payload: logEntry.payload,
+          })
+        }),
+      )
+    })
+
     describe('getColoredShow', () => {
       test('with a DEBUG', () => {
         fc.assert(

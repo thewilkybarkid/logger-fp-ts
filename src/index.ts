@@ -136,6 +136,14 @@ export const ShowLogEntry: Show<LogEntry> = {
 }
 
 /**
+ * @category instances
+ * @since 0.2.2
+ */
+export const JsonShowLogEntry: Show<LogEntry> = {
+  show: safeStringify,
+}
+
+/**
  * Colorizes log entries based on the level.
  *
  * @category instances
